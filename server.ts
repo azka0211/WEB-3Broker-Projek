@@ -5,7 +5,7 @@ import mqtt from 'mqtt';
 
 async function startServer() {
   const app = express();
-  const PORT = process.env.PORT || 3000;
+  const PORT = parseInt(process.env.PORT as string, 10) || 3000;
 
   // Izinkan request dari berbagai sumber (Vercel)
   app.use(cors({

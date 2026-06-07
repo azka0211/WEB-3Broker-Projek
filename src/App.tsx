@@ -26,7 +26,7 @@ import {
 import { LogEntry, MqttState } from './types';
 
 export default function App() {
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+  const BACKEND_URL = (import.meta as any).env.VITE_BACKEND_URL || '';
 
   // Application states
   const [state, setState] = useState<MqttState>({
@@ -50,6 +50,7 @@ export default function App() {
 
   const [isListening, setIsListening] = useState(false);
   const [speechError, setSpeechError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const startSpeechRecognitionRef = useRef<() => void>();
 
@@ -353,10 +354,10 @@ export default function App() {
 
     // Tanya suhu
     if (text.includes('suhu') || text.includes('temperatur') || text.includes('kelembaban')) {
-      const tempText = state.temperature !== null ? `${state.temperature} derajat celcius` : "belum tersedia";
-      const humText = state.humidity !== null ? `${state.humidity} persen` : "belum tersedia";
+      const tempText = state.temperature != null ? `${state.temperature} derajat celcius` : "belum tersedia";
+      const humText = state.humidity != null ? `${state.humidity} persen` : "belum tersedia";
       const msgText = `Suhu saat ini adalah ${tempText}, dan kelembaban ${humText}.`;
-      addVoiceLog(`Cek Sensor Suhu: ${state.temperature}°C, Kelembaban: ${state.humidity}%`, 'info');
+      addVoiceLog(`Cek Sensor Suhu: ${state.temperature != null ? state.temperature : '--'}°C, Kelembaban: ${state.humidity != null ? state.humidity : '--'}%`, 'info');
       speakResponse(msgText);
       return;
     }
@@ -364,7 +365,7 @@ export default function App() {
     if (action !== null) {
       if (isAll) {
         handleToggleAll(action === 'ON');
-        const msg = `Semua lampu dan variasi berhasil ${action === 'ON' ? 'dinyalakan' : 'dimatikan'}.`;
+        const msg = `Semua lampu berhasil ${action === 'ON' ? 'di nyalakan' : 'di matikan'}.`;
         speakResponse(msg);
         answered = true;
       } else if (isVariasi1) {
@@ -487,8 +488,8 @@ export default function App() {
 #include "DHT.h"
 
 // ================= PENGATURAN WIFI =================
-const char* ssid = "${wifiSsid}";
-const char* password = "${wifiPass}";
+const char* ssid = "WIFI_SSID_ANDA";
+const char* password = "WIFI_PASSWORD_ANDA";
 
 // ================ BROKER MULTI-PROFILE ============
 // 1 = MyQTTHub, 2 = Ably Realtime, 3 = Flespi IO
