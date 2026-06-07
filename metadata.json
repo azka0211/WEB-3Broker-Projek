@@ -1,0 +1,6 @@
+{
+  "name": "MyQttHub Relay Controller",
+  "description": "Dashboard pengendali 4 relay lampu menggunakan broker MyQTTHub, dilengkapi tombol 2 variasi, perintah suara (voice command), dan log aktivitas real-time.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
