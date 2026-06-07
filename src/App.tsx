@@ -359,6 +359,7 @@ export default function App() {
 
     // Tanya suhu
     if (text.includes('suhu') || text.includes('temperatur') || text.includes('kelembaban')) {
+      const currentState = stateRef.current;
       const tempText = currentState.suhu != null ? `${currentState.suhu} derajat celcius` : "belum tersedia";
       const humText = currentState.kelembaban != null ? `${currentState.kelembaban} persen` : "belum tersedia";
       const msgText = `Suhu saat ini adalah ${tempText}, dan kelembaban ${humText}.`;
