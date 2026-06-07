@@ -354,10 +354,10 @@ export default function App() {
 
     // Tanya suhu
     if (text.includes('suhu') || text.includes('temperatur') || text.includes('kelembaban')) {
-      const tempText = state.temperature != null ? `${state.temperature} derajat celcius` : "belum tersedia";
-      const humText = state.humidity != null ? `${state.humidity} persen` : "belum tersedia";
+      const tempText = state.suhu != null ? `${state.suhu} derajat celcius` : "belum tersedia";
+      const humText = state.kelembaban != null ? `${state.kelembaban} persen` : "belum tersedia";
       const msgText = `Suhu saat ini adalah ${tempText}, dan kelembaban ${humText}.`;
-      addVoiceLog(`Cek Sensor Suhu: ${state.temperature != null ? state.temperature : '--'}°C, Kelembaban: ${state.humidity != null ? state.humidity : '--'}%`, 'info');
+      addVoiceLog(`Cek Sensor Suhu: ${state.suhu != null ? state.suhu : '--'}°C, Kelembaban: ${state.kelembaban != null ? state.kelembaban : '--'}%`, 'info');
       speakResponse(msgText);
       return;
     }
