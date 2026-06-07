@@ -48,6 +48,11 @@ export default function App() {
     }
   });
 
+  const stateRef = useRef(state);
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
   const [isListening, setIsListening] = useState(false);
   const [speechError, setSpeechError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -354,10 +359,10 @@ export default function App() {
 
     // Tanya suhu
     if (text.includes('suhu') || text.includes('temperatur') || text.includes('kelembaban')) {
-      const tempText = state.suhu != null ? `${state.suhu} derajat celcius` : "belum tersedia";
-      const humText = state.kelembaban != null ? `${state.kelembaban} persen` : "belum tersedia";
+      const tempText = currentState.suhu != null ? `${currentState.suhu} derajat celcius` : "belum tersedia";
+      const humText = currentState.kelembaban != null ? `${currentState.kelembaban} persen` : "belum tersedia";
       const msgText = `Suhu saat ini adalah ${tempText}, dan kelembaban ${humText}.`;
-      addVoiceLog(`Cek Sensor Suhu: ${state.suhu != null ? state.suhu : '--'}°C, Kelembaban: ${state.kelembaban != null ? state.kelembaban : '--'}%`, 'info');
+      addVoiceLog(`Cek Sensor Suhu: ${currentState.suhu != null ? currentState.suhu : '--'}°C, Kelembaban: ${currentState.kelembaban != null ? currentState.kelembaban : '--'}%`, 'info');
       speakResponse(msgText);
       return;
     }
@@ -1433,7 +1438,7 @@ void loop() {
                     Belum ada log aktivitas yang tercatat. Gunakan kontrol di atas untuk memulai.
                   </div>
                 ) : (
-                  [...state.logs].reverse().map((log) => (
+                  state.logs.map((log) => (
                     <div 
                       key={log.id} 
                       className="flex items-start space-x-2 py-1 border-b border-[#182316] last:border-0 hover:bg-slate-800/20 px-1 rounded transition duration-150"
